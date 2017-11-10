@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="GameDBModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="GameDBModelStoreContainer">
+    <EntitySet Name="TblComments" EntityType="GameDBModel.Store.TblComments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TblGames" EntityType="GameDBModel.Store.TblGames" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TblGenres" EntityType="GameDBModel.Store.TblGenres" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TblPlatformTypes" EntityType="GameDBModel.Store.TblPlatformTypes" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Game_Genre_Tbl" EntityType="GameDBModel.Store.Game_Genre_Tbl" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Game_PlatformType_Tbl" EntityType="GameDBModel.Store.Game_PlatformType_Tbl" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_CommentTbl_CommentTbl" Association="GameDBModel.Store.FK_CommentTbl_CommentTbl">
+      <End Role="CommentTbl" EntitySet="TblComments" />
+      <End Role="CommentTbl1" EntitySet="TblComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CommentTbl_GameTbl" Association="GameDBModel.Store.FK_CommentTbl_GameTbl">
+      <End Role="GameTbl" EntitySet="TblGames" />
+      <End Role="CommentTbl" EntitySet="TblComments" />
+    </AssociationSet>
+    <AssociationSet Name="FK_GenreTbl_GenreTbl" Association="GameDBModel.Store.FK_GenreTbl_GenreTbl">
+      <End Role="GenreTbl" EntitySet="TblGenres" />
+      <End Role="GenreTbl1" EntitySet="TblGenres" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Game_Genre_Tbl_GameTbl" Association="GameDBModel.Store.FK_Game_Genre_Tbl_GameTbl">
+      <End Role="GameTbl" EntitySet="TblGames" />
+      <End Role="Game_Genre_Tbl" EntitySet="Game_Genre_Tbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Game_Genre_Tbl_GenreTbl" Association="GameDBModel.Store.FK_Game_Genre_Tbl_GenreTbl">
+      <End Role="GenreTbl" EntitySet="TblGenres" />
+      <End Role="Game_Genre_Tbl" EntitySet="Game_Genre_Tbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Game_PlatformType_Tbl_PlatformType" Association="GameDBModel.Store.FK_Game_PlatformType_Tbl_PlatformType">
+      <End Role="PlatformType" EntitySet="TblPlatformTypes" />
+      <End Role="Game_PlatformType_Tbl" EntitySet="Game_PlatformType_Tbl" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Game_PlatformType_Tbl_GameTbl" Association="GameDBModel.Store.FK_Game_PlatformType_Tbl_GameTbl">
+      <End Role="GameTbl" EntitySet="TblGames" />
+      <End Role="Game_PlatformType_Tbl" EntitySet="Game_PlatformType_Tbl" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TblComments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Body" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Game_Id" Type="int" Nullable="true" />
+    <Property Name="ParentCommentId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="TblGames">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Key" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Description" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="TblGenres">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ParentGenreId" Type="int" Nullable="true" />
+  </EntityType>
+  <EntityType Name="TblPlatformTypes">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Type" Type="varchar" Nullable="false" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Game_Genre_Tbl">
+    <Key>
+      <PropertyRef Name="TblGames_Id" />
+      <PropertyRef Name="TblGenres_Id" />
+    </Key>
+    <Property Name="TblGames_Id" Type="int" Nullable="false" />
+    <Property Name="TblGenres_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Game_PlatformType_Tbl">
+    <Key>
+      <PropertyRef Name="TblPlatformTypes_Id" />
+      <PropertyRef Name="TblGames_Id" />
+    </Key>
+    <Property Name="TblPlatformTypes_Id" Type="int" Nullable="false" />
+    <Property Name="TblGames_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_CommentTbl_CommentTbl">
+    <End Role="CommentTbl" Type="GameDBModel.Store.TblComments" Multiplicity="0..1" />
+    <End Role="CommentTbl1" Type="GameDBModel.Store.TblComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CommentTbl">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CommentTbl1">
+        <PropertyRef Name="ParentCommentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CommentTbl_GameTbl">
+    <End Role="GameTbl" Type="GameDBModel.Store.TblGames" Multiplicity="0..1" />
+    <End Role="CommentTbl" Type="GameDBModel.Store.TblComments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GameTbl">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="CommentTbl">
+        <PropertyRef Name="Game_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_GenreTbl_GenreTbl">
+    <End Role="GenreTbl" Type="GameDBModel.Store.TblGenres" Multiplicity="0..1" />
+    <End Role="GenreTbl1" Type="GameDBModel.Store.TblGenres" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GenreTbl">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="GenreTbl1">
+        <PropertyRef Name="ParentGenreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Game_Genre_Tbl_GameTbl">
+    <End Role="GameTbl" Type="GameDBModel.Store.TblGames" Multiplicity="1" />
+    <End Role="Game_Genre_Tbl" Type="GameDBModel.Store.Game_Genre_Tbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GameTbl">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Game_Genre_Tbl">
+        <PropertyRef Name="TblGames_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Game_Genre_Tbl_GenreTbl">
+    <End Role="Game_Genre_Tbl" Type="GameDBModel.Store.Game_Genre_Tbl" Multiplicity="*" />
+    <End Role="GenreTbl" Type="GameDBModel.Store.TblGenres" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="GenreTbl">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Game_Genre_Tbl">
+        <PropertyRef Name="TblGenres_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Game_PlatformType_Tbl_PlatformType">
+    <End Role="PlatformType" Type="GameDBModel.Store.TblPlatformTypes" Multiplicity="1" />
+    <End Role="Game_PlatformType_Tbl" Type="GameDBModel.Store.Game_PlatformType_Tbl" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PlatformType">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Game_PlatformType_Tbl">
+        <PropertyRef Name="TblPlatformTypes_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Game_PlatformType_Tbl_GameTbl">
+    <End Role="Game_PlatformType_Tbl" Type="GameDBModel.Store.Game_PlatformType_Tbl" Multiplicity="*" />
+    <End Role="GameTbl" Type="GameDBModel.Store.TblGames" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="GameTbl">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Game_PlatformType_Tbl">
+        <PropertyRef Name="TblGames_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="GameDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="TblComment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Body" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Game_Id" Type="Int32" />
+          <Property Name="ParentCommentId" Type="Int32" />
+          <NavigationProperty Name="ChildComments" Relationship="Self.FK_CommentTbl_CommentTbl" FromRole="CommentTbl" ToRole="CommentTbl1" />
+          <NavigationProperty Name="ParentComment" Relationship="Self.FK_CommentTbl_CommentTbl" FromRole="CommentTbl1" ToRole="CommentTbl" />
+          <NavigationProperty Name="TblGame" Relationship="Self.FK_CommentTbl_GameTbl" FromRole="CommentTbl" ToRole="GameTbl" />
+        </EntityType>
+        <EntityType Name="TblGame">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Key" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TblComments" Relationship="Self.FK_CommentTbl_GameTbl" FromRole="GameTbl" ToRole="CommentTbl" />
+          <NavigationProperty Name="TblGenres" Relationship="Self.Game_Genre_Tbl" FromRole="GameTbl" ToRole="GenreTbl" />
+          <NavigationProperty Name="TblPlatformTypes" Relationship="Self.Game_PlatformType_Tbl" FromRole="GameTbl" ToRole="PlatformType" />
+        </EntityType>
+        <EntityType Name="TblGenre">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ParentGenreId" Type="Int32" />
+          <NavigationProperty Name="ChildGenres" Relationship="Self.FK_GenreTbl_GenreTbl" FromRole="GenreTbl" ToRole="GenreTbl1" />
+          <NavigationProperty Name="ParentGenre" Relationship="Self.FK_GenreTbl_GenreTbl" FromRole="GenreTbl1" ToRole="GenreTbl" />
+          <NavigationProperty Name="TblGames" Relationship="Self.Game_Genre_Tbl" FromRole="GenreTbl" ToRole="GameTbl" />
+        </EntityType>
+        <EntityType Name="TblPlatformType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TblGames" Relationship="Self.Game_PlatformType_Tbl" FromRole="PlatformType" ToRole="GameTbl" />
+        </EntityType>
+        <Association Name="FK_CommentTbl_CommentTbl">
+          <End Role="CommentTbl" Type="GameDBModel.TblComment" Multiplicity="0..1" />
+          <End Role="CommentTbl1" Type="GameDBModel.TblComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CommentTbl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommentTbl1">
+              <PropertyRef Name="ParentCommentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CommentTbl_GameTbl">
+          <End Role="GameTbl" Type="GameDBModel.TblGame" Multiplicity="0..1" />
+          <End Role="CommentTbl" Type="GameDBModel.TblComment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GameTbl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CommentTbl">
+              <PropertyRef Name="Game_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_GenreTbl_GenreTbl">
+          <End Role="GenreTbl" Type="GameDBModel.TblGenre" Multiplicity="0..1" />
+          <End Role="GenreTbl1" Type="GameDBModel.TblGenre" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GenreTbl">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="GenreTbl1">
+              <PropertyRef Name="ParentGenreId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Game_Genre_Tbl">
+          <End Role="GameTbl" Type="GameDBModel.TblGame" Multiplicity="*" />
+          <End Role="GenreTbl" Type="GameDBModel.TblGenre" Multiplicity="*" />
+        </Association>
+        <Association Name="Game_PlatformType_Tbl">
+          <End Role="PlatformType" Type="GameDBModel.TblPlatformType" Multiplicity="*" />
+          <End Role="GameTbl" Type="GameDBModel.TblGame" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TblComments" EntityType="GameDBModel.TblComment" />
+          <EntitySet Name="TblGames" EntityType="GameDBModel.TblGame" />
+          <EntitySet Name="TblGenres" EntityType="GameDBModel.TblGenre" />
+          <EntitySet Name="TblPlatformTypes" EntityType="GameDBModel.TblPlatformType" />
+          <AssociationSet Name="FK_CommentTbl_CommentTbl" Association="Self.FK_CommentTbl_CommentTbl">
+            <End Role="CommentTbl" EntitySet="TblComments" />
+            <End Role="CommentTbl1" EntitySet="TblComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CommentTbl_GameTbl" Association="Self.FK_CommentTbl_GameTbl">
+            <End Role="GameTbl" EntitySet="TblGames" />
+            <End Role="CommentTbl" EntitySet="TblComments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_GenreTbl_GenreTbl" Association="Self.FK_GenreTbl_GenreTbl">
+            <End Role="GenreTbl" EntitySet="TblGenres" />
+            <End Role="GenreTbl1" EntitySet="TblGenres" />
+          </AssociationSet>
+          <AssociationSet Name="Game_Genre_Tbl" Association="Self.Game_Genre_Tbl">
+            <End Role="GameTbl" EntitySet="TblGames" />
+            <End Role="GenreTbl" EntitySet="TblGenres" />
+          </AssociationSet>
+          <AssociationSet Name="Game_PlatformType_Tbl" Association="Self.Game_PlatformType_Tbl">
+            <End Role="PlatformType" EntitySet="TblPlatformTypes" />
+            <End Role="GameTbl" EntitySet="TblGames" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="GameDBModelStoreContainer" CdmEntityContainer="Entities">
+    <EntitySetMapping Name="TblComments">
+      <EntityTypeMapping TypeName="IsTypeOf(GameDBModel.TblComment)">
+        <MappingFragment StoreEntitySet="TblComments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Body" ColumnName="Body" />
+          <ScalarProperty Name="Game_Id" ColumnName="Game_Id" />
+          <ScalarProperty Name="ParentCommentId" ColumnName="ParentCommentId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TblGames">
+      <EntityTypeMapping TypeName="IsTypeOf(GameDBModel.TblGame)">
+        <MappingFragment StoreEntitySet="TblGames">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Key" ColumnName="Key" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TblGenres">
+      <EntityTypeMapping TypeName="IsTypeOf(GameDBModel.TblGenre)">
+        <MappingFragment StoreEntitySet="TblGenres">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ParentGenreId" ColumnName="ParentGenreId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TblPlatformTypes">
+      <EntityTypeMapping TypeName="IsTypeOf(GameDBModel.TblPlatformType)">
+        <MappingFragment StoreEntitySet="TblPlatformTypes">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Type" ColumnName="Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="Game_Genre_Tbl" TypeName="GameDBModel.Game_Genre_Tbl" StoreEntitySet="Game_Genre_Tbl">
+      <EndProperty Name="GameTbl">
+        <ScalarProperty Name="Id" ColumnName="TblGames_Id" />
+      </EndProperty>
+      <EndProperty Name="GenreTbl">
+        <ScalarProperty Name="Id" ColumnName="TblGenres_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="Game_PlatformType_Tbl" TypeName="GameDBModel.Game_PlatformType_Tbl" StoreEntitySet="Game_PlatformType_Tbl">
+      <EndProperty Name="PlatformType">
+        <ScalarProperty Name="Id" ColumnName="TblPlatformTypes_Id" />
+      </EndProperty>
+      <EndProperty Name="GameTbl">
+        <ScalarProperty Name="Id" ColumnName="TblGames_Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
